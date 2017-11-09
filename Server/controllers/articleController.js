@@ -1,9 +1,10 @@
 const Article = require('../models/article')
+const User = require('../models/user')
 const helper = require('../helpers/helpers')
 
 module.exports = {
   findAll: (req, res) => {
-    Article.find().then((allArticles) => {
+    Article.find().populate('author').then((allArticles) => {
       res.status(200).json({
         message: "Show all articles",
         data: allArticles
@@ -29,6 +30,62 @@ module.exports = {
   },
 
   create: (req, res) => {
-    Article.create()
+    let userId = helper.tokenDecode(req.headers.token)
+    User.findOne({_id: userId}).then((result) => {
+      if (result) {
+        Article.create(helper.dataArticle(req.body, userId)).then((createdArticle) => {
+          res.status(200).json({
+            message: "Insert Article Success",
+            data: createdArticle
+          })
+        }).catch((reason) => {
+          res.status(400).json({
+            message: reason
+          })
+        })
+      } else {
+        res.status(401).json({
+          message: "You have no authority to create article"
+        })
+      }
+    }).catch((reason) => {
+      res.status(400).json({
+        message: reason
+      })
+    })
+  },
+
+  update: (req, res) => {
+    let userId = helper.tokenDecode(req.headers.token)
+    Article.findOne({_id: req.params.id}).then((result) => {
+      // console.log(userId);
+      // console.log(result);
+      if (result.author == userId) {
+        Article.update({_id: req.params.id}, {
+          $set: {
+            title: req.body.title,
+            content: req.body.content,
+            category: req.body.category
+          }
+        }).then((updatedArticle) => {
+          res.status(200).json({
+            message: "Update Success",
+            data: updatedArticle
+          })
+        }).catch((reason) => {
+          res.status(400).json({
+            message: reason
+          })
+        })
+      } else {
+        res.status(401).json({
+          message: "You have no authority to update this article"
+        })
+      }
+    }).catch((reason) => {
+      res.status(400).json({
+        message: reason
+      })
+    })
   }
 }

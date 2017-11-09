@@ -9,4 +9,8 @@ router.get('/:id', controller.findOne);
 
 router.post('/', controller.create);
 
+router.put('/:id', controller.update);
+
+router.get('/autho/:authorId', controller.update);
+
 module.exports = router;

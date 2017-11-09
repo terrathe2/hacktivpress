@@ -3,8 +3,15 @@ const jwtDecode = require('jwt-decode')
 const crypto = require('crypto')
 
 module.exports = {
-  dataArticle: (reqBody) => {
+  dataArticle: (reqBody, userId) => {
+    let obj = {
+      author: userId,
+      title: reqBody.title,
+      content: reqBody.content,
+      category: reqBody.category
+    }
 
+    return obj
   },
 
   secretGen: () => {
