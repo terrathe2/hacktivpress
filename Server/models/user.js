@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const url = 'mongodb://admin:admin@localhost:3000/hacktivpress-redha'
+const url = 'mongodb://localhost/hacktivpress-redha'
 mongoose.connection.openUri(url)
 
 const schema = new mongoose.Schema({
