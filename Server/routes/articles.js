@@ -11,6 +11,10 @@ router.post('/', controller.create);
 
 router.put('/:id', controller.update);
 
-router.get('/autho/:authorId', controller.update);
+router.get('/author/:authorId', controller.findByAuthor);
+
+router.get('/category/:category', controller.findByCategory);
+
+router.delete('/:id', controller.delete)
 
 module.exports = router;

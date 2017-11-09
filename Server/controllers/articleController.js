@@ -87,5 +87,44 @@ module.exports = {
         message: reason
       })
     })
+  },
+
+  findByAuthor: (req, res) => {
+    Article.find({author: req.params.authorId}).then((articleByAuthor) => {
+      res.status(200).json({
+        message: "Show by author success",
+        data: articleByAuthor
+      })
+    }).catch((reason) => {
+      res.status(400).json({
+        message: reason
+      })
+    })
+  },
+
+  findByCategory: (req, res) => {
+    Article.find({category: req.params.category}).then((articleByCategory) => {
+      res.status(200).json({
+        message: "Show by category success",
+        data: articleByCategory
+      })
+    }).catch((reason) => {
+      res.status(400).json({
+        message: reason
+      })
+    })
+  },
+
+  delete: (req, res) => {
+    Article.remove({_id: req.params.id}).then((result) => {
+      res.status(200).json({
+        message: "Delete Article Success",
+        data: result
+      })
+    }).catch((reason) => {
+      res.status(400).json({
+        message: reason
+      })
+    })
   }
 }
