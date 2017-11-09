@@ -3,6 +3,10 @@ const jwtDecode = require('jwt-decode')
 const crypto = require('crypto')
 
 module.exports = {
+  dataArticle: (reqBody) => {
+
+  },
+
   secretGen: () => {
     let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
 
